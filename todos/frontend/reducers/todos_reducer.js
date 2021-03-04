@@ -20,10 +20,15 @@ const todosReducer = (state = initialState, action) => {
   const nextState = Object.assign({}, state)
 
   switch (action.type) {
-    // case RECEIVE_TODOS:
-
-    // case RECEIVE_TODO:
-
+    case RECEIVE_TODOS:
+      console.log(action.todos)
+      action.todos.forEach((todo) => {
+        nextState[todo.id] = todo;
+      })
+      return nextState;
+    case RECEIVE_TODO:
+      nextState[action.todo.id] = action.todo;
+      return nextState;
     default:
       return state;
   }
