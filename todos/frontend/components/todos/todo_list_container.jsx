@@ -7,7 +7,6 @@ import {receiveTodo} from "../../actions/todo_actions";
 const mapStateToProps = (state) => {
   return {
     todos: allTodos(state),
-    state // good practice?
   }
 }
 
