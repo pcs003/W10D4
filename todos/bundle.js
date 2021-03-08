@@ -412,10 +412,14 @@ var TodoList = /*#__PURE__*/function (_React$Component) {
   _createClass(TodoList, [{
     key: "render",
     value: function render() {
+      var _this = this;
+
       var elements = this.props.todos.map(function (todo, idx) {
         return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_todo_list_item__WEBPACK_IMPORTED_MODULE_1__.default, {
           todo: todo,
-          key: idx
+          key: idx,
+          receiveTodo: _this.props.receiveTodo,
+          removeTodo: _this.props.removeTodo
         });
       });
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -465,7 +469,20 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     receiveTodo: function receiveTodo(todo) {
       return dispatch((0,_actions_todo_actions__WEBPACK_IMPORTED_MODULE_4__.receiveTodo)(todo));
-    }
+    },
+    removeTodo: function (_removeTodo) {
+      function removeTodo(_x) {
+        return _removeTodo.apply(this, arguments);
+      }
+
+      removeTodo.toString = function () {
+        return _removeTodo.toString();
+      };
+
+      return removeTodo;
+    }(function (todo) {
+      return dispatch(removeTodo(todo));
+    })
   };
 };
 
@@ -514,16 +531,33 @@ var TodoListItem = /*#__PURE__*/function (_React$Component) {
 
   var _super = _createSuper(TodoListItem);
 
-  function TodoListItem() {
+  function TodoListItem(props) {
+    var _this;
+
     _classCallCheck(this, TodoListItem);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this, props);
+    _this.deleteTodo = _this.deleteTodo.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(TodoListItem, [{
+    key: "deleteTodo",
+    value: function deleteTodo(e) {
+      e.preventDefault();
+      this.props.removeTodo(this.props.todo);
+    }
+  }, {
+    key: "changeDone",
+    value: function changeDone(e) {
+      e.preventDefault(); // this.props.receiveTodo();
+    }
+  }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, this.props.todo.title);
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("li", null, this.props.todo.title, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+        onClick: this.deleteTodo
+      }, "Frag"));
     }
   }]);
 
